@@ -3,10 +3,16 @@ import Head from "next/head";
 import DynamicText from "../components/DynamicText";
 
 import { Flex, Heading, Link, Input } from "@chakra-ui/react";
+import { useRef } from "react";
+
+interface RefObject {
+  changeValue: (newValue) => void
+}
 
 const Home = () => {
+  const childRef = useRef<RefObject>(null);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    childRef.current.changeValue(e.target.value);
   };
 
   return (
@@ -17,7 +23,7 @@ const Home = () => {
       </Head>
 
       <Flex direction='column' grow='1' px='0' py='5rem' justify='center' align='center'>
-        <DynamicText />
+        <DynamicText ref={childRef} />
         <Input onChange={onChange} />
       </Flex>
     </Flex>
